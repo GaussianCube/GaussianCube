@@ -27,14 +27,29 @@ Please download model checkpoints and dataset statistics (pre-computed mean and 
 
 | Model                 | Task                          | Download                                                                          |
 |-----------------------|-------------------------------|-----------------------------------------------------------------------------------|
-| OmniObject3D          | Class-conditioned Generation  | [🤗 Hugging Face](https://huggingface.co/BwZhang/GaussianCube-OmniObject3D-v1.0) |
-| ShapeNet Car          | Unconditional Generation      | TBA.   |
-| ShapeNet Chair        | Unconditional Generation      | TBA.   |
+| OmniObject3D          | Class-conditioned Generation  | [🤗 Hugging Face](https://huggingface.co/BwZhang/GaussianCube-OmniObject3D-v1.0)  |
+| ShapeNet Car          | Unconditional Generation      | [🤗 Hugging Face](https://huggingface.co/BwZhang/GaussianCube-ShapeNetCar-v1.0)   |
+| ShapeNet Chair        | Unconditional Generation      | [🤗 Hugging Face](https://huggingface.co/BwZhang/GaussianCube-ShapeNetChair-v1.0) |
 
 ## Inference
 
+### Class-conditioned Generation on OmniObject3D
+
+To inference pretrained model of OmniObject3D, save the downloaded model checkpoint and dataset statistics to `./OmniObject3D/`, then run:
 ```bash
 python inference.py --exp_name /tmp/OmniObject3D_test --config configs/omni_class_cond.yml  --rescale_timesteps 300 --ckpt ./OmniObject3D/OmniObject3D_ckpt.pt  --mean_file ./OmniObject3D/mean.pt --std_file ./OmniObject3D/std.pt  --bound 1.0 --num_samples 10 --render_video --class_cond
+```
+
+### Unconditional Generation on ShapeNet
+
+To inference pretrained model of ShapeNet Car, save the downloaded model checkpoint and dataset statistics to `./shapenet_car/`, then run:
+```bash
+python render_inference.py --exp_name /tmp/shapenet_car_test --config configs/shapenet_uncond.yml  --rescale_timesteps 300 --ckpt ./shapenet_car/shapenet_car_ckpt.pt  --mean_file ./shapenet_car/mean.pt  --std_file ./shapenet_car/std.pt  --bound 0.45 --num_samples 10 --render_video
+```
+
+To inference pretrained model of ShapeNet Chair, save the downloaded model checkpoint and dataset statistics to `./shapenet_chair/`, then run:
+```bash
+python inference.py --exp_name /tmp/shapenet_chair_test --config configs/shapenet_uncond.yml  --rescale_timesteps 300 --ckpt ./shapenet_chair/shapenet_chair_ckpt.pt  --mean_file ./shapenet_chair/mean.pt  --std_file ./shapenet_chair/std.pt  --bound 0.35 --num_samples 10 --render_video
 ```
 
 ## Acknowledgement
@@ -44,6 +59,6 @@ This codebase is built upon the [improved-diffusion](https://github.com/openai/i
 ## Todo
 
 - [x] Release the inference code.
-- [ ] Release all pretrained models.
+- [x] Release all pretrained models.
 - [ ] Release the data fitting code.
 - [ ] Release the diffusion training code.
