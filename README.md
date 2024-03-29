@@ -2,7 +2,7 @@
 
 By [Bowen Zhang](http://home.ustc.edu.cn/~zhangbowen), [Yiji Cheng](https://www.linkedin.com/in/yiji-cheng-a8b922213/?originalSubdomain=cn), [Jiaolong Yang](https://jlyang.org/), [Chunyu Wang](https://www.chunyuwang.org/), [Feng Zhao](https://en.auto.ustc.edu.cn/2021/0616/c26828a513169/page.htm), [Yansong Tang](https://andytang15.github.io/), [Dong Chen](http://www.dongchen.pro/), [Baining Guo](https://www.microsoft.com/en-us/research/people/bainguo/).
 
-[Paper]() | [Project Page](https://gaussiancube.github.io/) | [Code](https://github.com/GaussianCube/GaussianCube)
+[Paper](https://arxiv.org/abs/2403.19655) | [Project Page](https://gaussiancube.github.io/) | [Code](https://github.com/GaussianCube/GaussianCube)
 
 ## Abstract
 
@@ -55,6 +55,20 @@ python inference.py --exp_name /tmp/shapenet_chair_test --config configs/shapene
 ## Acknowledgement
 
 This codebase is built upon the [improved-diffusion](https://github.com/openai/improved-diffusion), thanks to the authors for their great work.
+
+## Citation
+
+If you find this work useful, please consider citing:
+```
+@misc{zhang2024gaussiancube,
+      title={GaussianCube: Structuring Gaussian Splatting using Optimal Transport for 3D Generative Modeling}, 
+      author={Bowen Zhang and Yiji Cheng and Jiaolong Yang and Chunyu Wang and Feng Zhao and Yansong Tang and Dong Chen and Baining Guo},
+      year={2024},
+      eprint={2403.19655},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
+```
 
 ## Todo
 
