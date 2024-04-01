@@ -60,13 +60,11 @@ This codebase is built upon the [improved-diffusion](https://github.com/openai/i
 
 If you find this work useful, please consider citing:
 ```
-@misc{zhang2024gaussiancube,
-      title={GaussianCube: Structuring Gaussian Splatting using Optimal Transport for 3D Generative Modeling}, 
-      author={Bowen Zhang and Yiji Cheng and Jiaolong Yang and Chunyu Wang and Feng Zhao and Yansong Tang and Dong Chen and Baining Guo},
-      year={2024},
-      eprint={2403.19655},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV}
+@article{zhang2024gaussiancube,
+  title={GaussianCube: Structuring Gaussian Splatting using Optimal Transport for 3D Generative Modeling},
+  author={Zhang, Bowen and Cheng, Yiji and Yang, Jiaolong and Wang, Chunyu and Zhao, Feng and Tang, Yansong and Chen, Dong and Guo, Baining},
+  journal={arXiv preprint arXiv:2403.19655},
+  year={2024}
 }
 ```
 
