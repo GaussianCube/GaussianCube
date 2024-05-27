@@ -617,15 +617,33 @@ class UNetModel(nn.Module):
 
         self.activation_layer = get_activation(activation) if self.efficient_activation else nn.Identity()
 
+        if not self.unconditional_gen and num_classes is None:
+            self.encoder_pooling = nn.Sequential(
+                nn.LayerNorm(encoder_dim, dtype=self.dtype),
+                AttentionPooling(att_pool_heads, encoder_dim, dtype=self.dtype),
+                nn.Linear(encoder_dim, self.time_embed_dim, dtype=self.dtype),
+                nn.LayerNorm(self.time_embed_dim, dtype=self.dtype)
+            )
+            if encoder_dim != encoder_channels:
+                self.encoder_proj = nn.Linear(encoder_dim, encoder_channels, dtype=self.dtype)
+            else:
+                self.encoder_proj = nn.Identity()
+
         self.cache = None
 
-    def forward(self, x, timesteps, class_labels=None, aug_emb=None, use_cache=False, **kwargs):
+    def forward(self, x, timesteps, cond_text=None, class_labels=None, aug_emb=None, use_cache=False, **kwargs):
         hs = []
         input_type = x.dtype
         emb = self.time_embed(timestep_embedding(timesteps, self.model_channels, dtype=self.dtype))
 
         encoder_out = None
-        if not self.unconditional_gen:
+        if cond_text is not None:
+            cond_text = cond_text.type(self.dtype)
+            encoder_out = self.encoder_proj(cond_text)
+            encoder_out = encoder_out.permute(0, 2, 1)  # NLC -> NCL
+            encoder_pool = self.encoder_pooling(cond_text)
+            emb = emb + encoder_pool.to(emb)
+        elif class_labels is not None:
             label_emb = self.label_emb(class_labels)
             emb = emb + label_emb.to(emb)
 

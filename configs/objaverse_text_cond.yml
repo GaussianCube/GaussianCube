@@ -1,0 +1,32 @@
+model:
+  dims: 3
+  image_size: 32
+  model_channels: 128
+  num_res_blocks: 3
+  channel_mult: "1,2,3,4"
+  attention_resolutions: "8,4"
+  num_heads: 1
+  num_head_channels: 64
+  num_heads_upsample: -1
+  use_scale_shift_norm: true
+  dropout: 0.0
+  resblock_updown: true
+  encoder_dim: 768
+  encoder_channels: 512
+  in_channels: 14
+  out_channels: 28
+  activation: "silu"
+  att_pool_heads: 64
+  disable_self_attentions: false
+  unconditional_gen: false
+  precision: "16"
+diffusion:
+  steps: 1000
+  learn_sigma: true
+  sigma_small: false
+  use_kl: false
+  noise_schedule: "cosine"
+  predict_type: "xstart"
+  predict_xstart: true
+  rescale_timesteps: true
+  rescale_learned_sigmas: true
