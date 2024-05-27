@@ -52,6 +52,12 @@ To inference pretrained model of ShapeNet Chair, save the downloaded model check
 python inference.py --exp_name /tmp/shapenet_chair_test --config configs/shapenet_uncond.yml  --rescale_timesteps 300 --ckpt ./shapenet_chair/shapenet_chair_ckpt.pt  --mean_file ./shapenet_chair/mean.pt  --std_file ./shapenet_chair/std.pt  --bound 0.35 --num_samples 10 --render_video
 ```
 
+## Training
+
+### Data Preparation
+
+Please refer to [data_construction](https://github.com/GaussianCube/GaussianCube_Construction).
+
 ## Acknowledgement
 
 This codebase is built upon the [improved-diffusion](https://github.com/openai/improved-diffusion), thanks to the authors for their great work.
@@ -72,5 +78,5 @@ If you find this work useful, please consider citing:
 
 - [x] Release the inference code.
 - [x] Release all pretrained models.
-- [ ] Release the data fitting code.
+- [x] Release the data construction code.
 - [ ] Release the diffusion training code.
