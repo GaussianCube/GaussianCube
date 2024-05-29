@@ -13,7 +13,7 @@ By [Bowen Zhang](http://home.ustc.edu.cn/~zhangbowen), [Yiji Cheng](https://www.
 We recommend Linux for performance and compatibility reasons. We use conda to manage the environment. Please install conda from [here](https://docs.conda.io/en/latest/miniconda.html) if you haven't done so.
 
 ```
-git clone https://github.com/GaussianCube
+git clone https://github.com/GaussianCube/GaussianCube.git
 cd GaussianCube
 conda env create -f environment.yml
 conda activate gaussiancube
