@@ -5,7 +5,7 @@ By [Bowen Zhang](http://home.ustc.edu.cn/~zhangbowen), [Yiji Cheng](https://www.
 [Paper](https://arxiv.org/abs/2403.19655) | [Project Page](https://gaussiancube.github.io/) | [Code](https://github.com/GaussianCube/GaussianCube)
 
 
-https://github.com/GaussianCube/GaussianCube/assets/164283176/c564717d-9628-489f-9b6f-3b54decb8ada
+https://github.com/GaussianCube/GaussianCube/assets/164283176/3935590f-a36a-4bdc-b9e1-520c35b9f53e
 
 
 ## Abstract
