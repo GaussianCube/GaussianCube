@@ -56,6 +56,25 @@ To inference pretrained model of ShapeNet Chair, save the downloaded model check
 python inference.py --exp_name /tmp/shapenet_chair_test --config configs/shapenet_uncond.yml  --rescale_timesteps 300 --ckpt ./shapenet_chair/shapenet_chair_ckpt.pt  --mean_file ./shapenet_chair/mean.pt  --std_file ./shapenet_chair/std.pt  --bound 0.35 --num_samples 10 --render_video
 ```
 
+### Mesh Conversion
+
+For the generated results, we provide a script to convert the generated GaussianCube to mesh following [LGM](https://github.com/3DTopia/LGM). First, install additional dependencies:
+
+```bash
+# for mesh extraction
+pip install nerfacc
+pip install git+https://github.com/NVlabs/nvdiffrast
+# install diff_gauss for alpha rendering
+git clone --recurse-submodules https://github.com/slothfulxtx/diff-gaussian-rasterization.git 
+cd diff-gaussian-rasterization
+python setup.py install
+```
+
+Then run the following command to convert the generated results to mesh:
+```bash
+python scripts/convert_mesh.py --test_path /tmp/shapenet_car_test/sample.pt --cam_radius 1.2 --bound 0.45 --mean_file ./shapenet_car/mean.pt --std_file ./shapenet_car/std.pt
+```
+
 ## Training
 
 ### Data Preparation
