@@ -105,7 +105,7 @@ Run the following command to train the model:
 python main.py --log_interval 100 --batch_size 8 --lr 5e-5 --exp_name ./output/omniobject3d_diffusion_training --save_interval 5000 --config configs/omni_class_cond.yml --use_tensorboard --use_vgg --load_camera 1 --render_l1_weight 10 --render_lpips_weight 10 --use_fp16 --mean_file ./example_data/omniobject3d/mean_volume_act.pt --std_file ./example_data/omniobject3d/std_volume_act.pt --data_dir ./example_data/omniobject3d/volume_act --cam_root_path ./example_data/omniobject3d/Omniobject3d_rendering_512/ --txt_file ./example_data/omniobject3d/omni_train.txt --uncond_p 0.2 --bound 1.0 --start_idx 0 --end_idx 100 --clip_input --omni
 ```
 
-### Text-conditioned Diffusion Training on OmniObject3D
+### Text-conditioned Diffusion Training on Objaverse
 
 Extract the CLIP features of text captions and put them under `./example_data/objaverse/` using the following script:
 ```bash
