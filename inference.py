@@ -132,6 +132,9 @@ def main():
 
                 frames.append(rgb_map)
         
+            samples = samples.permute(0, 2, 3, 4, 1).cpu()
+            torch.save(samples[0], os.path.join(logger.get_dir(), f"rank_{dist.get_rank():02}_{img_id:04d}" + ".pt"))
+            
             if args.render_video:
                 s_path = os.path.join(logger.get_dir(), 'videos')
                 os.makedirs(s_path,exist_ok=True)

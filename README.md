@@ -48,7 +48,7 @@ python inference.py --exp_name /tmp/OmniObject3D_test --config configs/omni_clas
 
 To inference pretrained model of ShapeNet Car, save the downloaded model checkpoint and dataset statistics to `./shapenet_car/`, then run:
 ```bash
-python render_inference.py --exp_name /tmp/shapenet_car_test --config configs/shapenet_uncond.yml  --rescale_timesteps 300 --ckpt ./shapenet_car/shapenet_car_ckpt.pt  --mean_file ./shapenet_car/mean.pt  --std_file ./shapenet_car/std.pt  --bound 0.45 --num_samples 10 --render_video
+python inference.py --exp_name /tmp/shapenet_car_test --config configs/shapenet_uncond.yml  --rescale_timesteps 300 --ckpt ./shapenet_car/shapenet_car_ckpt.pt  --mean_file ./shapenet_car/mean.pt  --std_file ./shapenet_car/std.pt  --bound 0.45 --num_samples 10 --render_video
 ```
 
 To inference pretrained model of ShapeNet Chair, save the downloaded model checkpoint and dataset statistics to `./shapenet_chair/`, then run:
@@ -72,7 +72,7 @@ python setup.py install
 
 Then run the following command to convert the generated results to mesh:
 ```bash
-python scripts/convert_mesh.py --test_path /tmp/shapenet_car_test/sample.pt --cam_radius 1.2 --bound 0.45 --mean_file ./shapenet_car/mean.pt --std_file ./shapenet_car/std.pt
+python scripts/convert_mesh.py --test_path /tmp/shapenet_car_test/rank_00_0000.pt --cam_radius 1.2 --bound 0.45 --mean_file ./shapenet_car/mean.pt --std_file ./shapenet_car/std.pt
 ```
 
 ## Training
