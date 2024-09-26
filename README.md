@@ -1,4 +1,4 @@
-# GaussianCube: A Structured and Explicit Radiance Representation for 3D Generative Modeling
+# GaussianCube: A Structured and Explicit Radiance Representation for 3D Generative Modeling [NeurIPS 2024]
 
 By [Bowen Zhang](http://home.ustc.edu.cn/~zhangbowen), [Yiji Cheng](https://www.linkedin.com/in/yiji-cheng-a8b922213/?originalSubdomain=cn), [Jiaolong Yang](https://jlyang.org/), [Chunyu Wang](https://www.chunyuwang.org/), [Feng Zhao](https://en.auto.ustc.edu.cn/2021/0616/c26828a513169/page.htm), [Yansong Tang](https://andytang15.github.io/), [Dong Chen](http://www.dongchen.pro/), [Baining Guo](https://www.microsoft.com/en-us/research/people/bainguo/).
 
