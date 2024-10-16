@@ -43,6 +43,8 @@ def main():
         from dataset.dataset_omni import load_data
     elif args.objaverse:
         from dataset.dataset_objaverse import load_data
+    elif args.avatar:
+        from dataset.dataset_avatar import load_data
     else:
         from dataset.dataset import load_data
 
@@ -134,6 +136,7 @@ def create_argparser():
     parser.add_argument("--bound", type=float, default=0.45)
     parser.add_argument("--omni", action="store_true")
     parser.add_argument("--objaverse", action="store_true")
+    parser.add_argument("--avatar", action="store_true")
     parser.add_argument("--clip_input", action="store_true")
     parser.add_argument("--text_feature_root", type=str, default="./example_data/objaverse/objaverse_text_feature/")
     parser.add_argument("--num_pts_each_axis", type=int, default=32)

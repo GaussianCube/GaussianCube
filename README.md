@@ -87,8 +87,19 @@ example_data
 │   ├── mean_volume_act.pt
 │   ├── std_volume_act.pt
 │   ├── shapenet_train.txt
-│   ├── volume_act
+│   ├── volume_act/
+│   │   ├── gs_cube_0000.pt
+│   │   ├── gs_cube_0001.pt
+│   │   └── ...
 │   └── shapenet_rendering_512
+```
+
+The `mean_volume_act.pt` and `std_volume_act.pt` are the pre-computed mean and std files of the training data in `volume_act/`. The `volume_act` folder contains the pre-processed GaussianCube data. The `shapenet_rendering_512` folder contains the rendered images of the training data. The `shapenet_train.txt` is the text file containing the list of training data, like:
+
+```
+gs_cube_0000
+gs_cube_0001
+...
 ```
 
 ### Unconditional Diffusion Training on ShapeNet Car or ShapeNet Chair
@@ -109,12 +120,24 @@ python main.py --log_interval 100 --batch_size 8 --lr 5e-5 --exp_name ./output/o
 
 Extract the CLIP features of text captions and put them under `./example_data/objaverse/` using the following script:
 ```bash
-python scripts/encode_text_features.py
+python scripts/encode_text_feature.py
 ```
 
 Then run the following command to train the model:
 ```bash
 python main.py --log_interval 100 --batch_size 8 --lr 5e-5 --weight_decay 0 --exp_name ./output/objaverse_diffusion_training --save_interval 5000 --config configs/objaverse_text_cond.yml --use_tensorboard --use_vgg --load_camera 1 --render_l1_weight 10 --render_lpips_weight 10 --use_fp16 --data_dir ./example_data/objaverse/volume_act/ --start_idx 0 --end_idx 100 --txt_file ./example_data/objaverse/objaverse_train.txt --mean_file ./example_data/objaverse/mean_volume_act.pt --std_file ./example_data/objaverse/std_volume_act.pt --cam_root_path ./example_data/objaverse/objaverse_rendering_512/ --bound 0.5 --uncond_p 0.2 --objaverse --clip_input --text_feature_root ./example_data/objaverse/objaverse_text_feature/
+```
+
+### Image-conditioned Diffusion Training on Synthetic Avatar
+
+Extract the DINO features of avatars and put them under `./example_data/avatar/` using the following script:
+```bash
+python scripts/encode_dino_feature.py
+```
+
+Then run the following command to train the model:
+```bash
+python main.py --log_interval 100 --batch_size 8 --lr 5e-5 --weight_decay 0 --exp_name ./output/avatar_diffusion_training --save_interval 5000 --config configs/avatar_img_cond.yml --use_tensorboard --use_vgg --load_camera 1 --render_l1_weight 10 --render_lpips_weight 10 --use_fp16 --data_dir ./example_data/avatar/volume_act/ --start_idx 0 --end_idx 100 --txt_file ./example_data/avatar/avatar_train.txt --mean_file ./example_data/avatar/mean_volume_act.pt --std_file ./example_data/avatar/std_volume_act.pt --cam_root_path ./example_data/avatar/avatar_rendering_512/ --bound 0.5 --uncond_p 0.2 --avatar --clip_input --text_feature_root ./example_data/avatar/avatar_dino_feature/
 ```
 
 ## Acknowledgement
