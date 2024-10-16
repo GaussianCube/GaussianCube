@@ -1,4 +1,4 @@
-# GaussianCube: A Structured and Explicit Radiance Representation for 3D Generative Modeling
+# GaussianCube: A Structured and Explicit Radiance Representation for 3D Generative Modeling [NeurIPS 2024]
 
 By [Bowen Zhang](http://home.ustc.edu.cn/~zhangbowen), [Yiji Cheng](https://www.linkedin.com/in/yiji-cheng-a8b922213/?originalSubdomain=cn), [Jiaolong Yang](https://jlyang.org/), [Chunyu Wang](https://www.chunyuwang.org/), [Feng Zhao](https://en.auto.ustc.edu.cn/2021/0616/c26828a513169/page.htm), [Yansong Tang](https://andytang15.github.io/), [Dong Chen](http://www.dongchen.pro/), [Baining Guo](https://www.microsoft.com/en-us/research/people/bainguo/).
 
@@ -106,14 +106,14 @@ gs_cube_0001
 
 Run the following command to train the model:
 ```bash
-python main.py --log_interval 100 --batch_size 8 --lr 5e-5 --exp_name ./output/shapenet_diffusion_training --save_interval 5000 --config configs/shapenet_uncond.yml --use_tensorboard --use_vgg --load_camera 1 --render_l1_weight 10 --render_lpips_weight 10 --use_fp16 --mean_file ./example_data/shapenet/mean_volume_act.pt --std_file ./example_data/shapenet/std_volume_act.pt --data_dir ./example_data/shapenet/volume_act --cam_root_path ./example_data/shapenet/shapenet_rendering_512/ --txt_file ./example_data/shapenet/shapenet_train.txt --bound 0.45 --start_idx 0 --end_idx 100 --clip_input
+mpiexec -n 8 python main.py --log_interval 100 --batch_size 8 --lr 5e-5 --exp_name ./output/shapenet_diffusion_training --save_interval 5000 --config configs/shapenet_uncond.yml --use_tensorboard --use_vgg --load_camera 1 --render_l1_weight 10 --render_lpips_weight 10 --use_fp16 --mean_file ./example_data/shapenet/mean_volume_act.pt --std_file ./example_data/shapenet/std_volume_act.pt --data_dir ./example_data/shapenet/volume_act --cam_root_path ./example_data/shapenet/shapenet_rendering_512/ --txt_file ./example_data/shapenet/shapenet_train.txt --bound 0.45 --start_idx 0 --end_idx 100 --clip_input
 ```
 
 ### Class-conditioned Diffusion Training on OmniObject3D
 
 Run the following command to train the model:
 ```bash
-python main.py --log_interval 100 --batch_size 8 --lr 5e-5 --exp_name ./output/omniobject3d_diffusion_training --save_interval 5000 --config configs/omni_class_cond.yml --use_tensorboard --use_vgg --load_camera 1 --render_l1_weight 10 --render_lpips_weight 10 --use_fp16 --mean_file ./example_data/omniobject3d/mean_volume_act.pt --std_file ./example_data/omniobject3d/std_volume_act.pt --data_dir ./example_data/omniobject3d/volume_act --cam_root_path ./example_data/omniobject3d/Omniobject3d_rendering_512/ --txt_file ./example_data/omniobject3d/omni_train.txt --uncond_p 0.2 --bound 1.0 --start_idx 0 --end_idx 100 --clip_input --omni
+mpiexec -n 8 python main.py --log_interval 100 --batch_size 8 --lr 5e-5 --exp_name ./output/omniobject3d_diffusion_training --save_interval 5000 --config configs/omni_class_cond.yml --use_tensorboard --use_vgg --load_camera 1 --render_l1_weight 10 --render_lpips_weight 10 --use_fp16 --mean_file ./example_data/omniobject3d/mean_volume_act.pt --std_file ./example_data/omniobject3d/std_volume_act.pt --data_dir ./example_data/omniobject3d/volume_act --cam_root_path ./example_data/omniobject3d/Omniobject3d_rendering_512/ --txt_file ./example_data/omniobject3d/omni_train.txt --uncond_p 0.2 --bound 1.0 --start_idx 0 --end_idx 100 --clip_input --omni
 ```
 
 ### Text-conditioned Diffusion Training on Objaverse
@@ -125,7 +125,7 @@ python scripts/encode_text_feature.py
 
 Then run the following command to train the model:
 ```bash
-python main.py --log_interval 100 --batch_size 8 --lr 5e-5 --weight_decay 0 --exp_name ./output/objaverse_diffusion_training --save_interval 5000 --config configs/objaverse_text_cond.yml --use_tensorboard --use_vgg --load_camera 1 --render_l1_weight 10 --render_lpips_weight 10 --use_fp16 --data_dir ./example_data/objaverse/volume_act/ --start_idx 0 --end_idx 100 --txt_file ./example_data/objaverse/objaverse_train.txt --mean_file ./example_data/objaverse/mean_volume_act.pt --std_file ./example_data/objaverse/std_volume_act.pt --cam_root_path ./example_data/objaverse/objaverse_rendering_512/ --bound 0.5 --uncond_p 0.2 --objaverse --clip_input --text_feature_root ./example_data/objaverse/objaverse_text_feature/
+mpiexec -n 8 python main.py --log_interval 100 --batch_size 8 --lr 5e-5 --weight_decay 0 --exp_name ./output/objaverse_diffusion_training --save_interval 5000 --config configs/objaverse_text_cond.yml --use_tensorboard --use_vgg --load_camera 1 --render_l1_weight 10 --render_lpips_weight 10 --use_fp16 --data_dir ./example_data/objaverse/volume_act/ --start_idx 0 --end_idx 100 --txt_file ./example_data/objaverse/objaverse_train.txt --mean_file ./example_data/objaverse/mean_volume_act.pt --std_file ./example_data/objaverse/std_volume_act.pt --cam_root_path ./example_data/objaverse/objaverse_rendering_512/ --bound 0.5 --uncond_p 0.2 --objaverse --clip_input --text_feature_root ./example_data/objaverse/objaverse_text_feature/
 ```
 
 ### Image-conditioned Diffusion Training on Synthetic Avatar
