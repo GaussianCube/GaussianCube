@@ -31,9 +31,15 @@ Please download model checkpoints and dataset statistics (pre-computed mean and 
 
 | Model                 | Task                          | Download                                                                          |
 |-----------------------|-------------------------------|-----------------------------------------------------------------------------------|
+| Objaverse             | Text-conditioned Generation   | [🤗 Hugging Face v1.0](https://huggingface.co/BwZhang/GaussianCube-Objaverse/tree/main/v1.0) |
+|                       |                               | [🤗 Hugging Face v1.1](https://huggingface.co/BwZhang/GaussianCube-Objaverse/tree/main/v1.1) |
 | OmniObject3D          | Class-conditioned Generation  | [🤗 Hugging Face](https://huggingface.co/BwZhang/GaussianCube-OmniObject3D-v1.0)  |
 | ShapeNet Car          | Unconditional Generation      | [🤗 Hugging Face](https://huggingface.co/BwZhang/GaussianCube-ShapeNetCar-v1.0)   |
 | ShapeNet Chair        | Unconditional Generation      | [🤗 Hugging Face](https://huggingface.co/BwZhang/GaussianCube-ShapeNetChair-v1.0) |
+
+Note: The `v1.0` Objaverse model is trained under the setting of [our paper](http://arxiv.org/abs/2403.19655). 
+
+For `v1.1` version, we re-filter the data of Objaverse according to [aesthetic score](https://laion.ai/blog/laion-aesthetics/). We also include `hssd_models` and `3D-FUTURE` for training, building a training set of around 170k high-quality 3D assets. Moreover, we generate the text captions of each 3D asset using GPT-4o, resulting highly detailed text description. Therefore, our `v1.1` model has stronger capability to longer and more detailed input text captions. The high-quality text captions will be made pubic available soon, please stay tuned.
 
 ## Inference
 
