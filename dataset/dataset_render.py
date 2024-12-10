@@ -15,9 +15,11 @@ def load_data(
     batch_size,
     deterministic=False,
     class_cond=False,
+    text_cond=False,
 ):
     dataset = InferenceDataset(
         class_cond=class_cond,
+        text_cond=text_cond,
     )
     loader = DataLoader(
         dataset, batch_size=batch_size, shuffle=False, num_workers=1, drop_last=True, pin_memory=True
@@ -30,9 +32,11 @@ class InferenceDataset(Dataset):
     def __init__(
         self,
         class_cond=False,
+        text_cond=False,
     ):
         super().__init__()
         self.class_cond = class_cond
+        self.text_cond = text_cond
         self.num_classes = 216
 
     def __len__(self):
@@ -49,7 +53,7 @@ class InferenceDataset(Dataset):
 
         azimuth = np.arange(0, 360, 6, dtype=np.int32)
         elevation = -30
-        cam_radius = 1.2 if not self.class_cond else np.sqrt(16.25)
+        cam_radius = np.sqrt(16.25) if self.class_cond else 2.0 if self.text_cond else 1.2
         cams = []
         convert_mat = np.array([[1, 0, 0, 0], [0, 0, 1, 0], [0, 1, 0, 0], [0, 0, 0, 1]]).astype(np.float32)
         for azi in azimuth:
@@ -60,9 +64,8 @@ class InferenceDataset(Dataset):
         return data_dict
         
 
-def load_cam(c2w, class_cond=False):
+def load_cam(c2w, class_cond=False, orig_image_size=512):
     fovx = 0.8575560450553894 if not class_cond else 0.6911112070083618
-    orig_image_size = 512
     # change from OpenGL/Blender camera axes (Y up, Z back) to COLMAP (Y down, Z forward)
     c2w[:3, 1:3] *= -1
     # get the world-to-camera transform and set R, T

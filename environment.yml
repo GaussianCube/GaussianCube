@@ -22,4 +22,5 @@ dependencies:
     - scipy
     - opencv-python
     - imageio-ffmpeg
+    - huggingface_hub
     - git+https://github.com/graphdeco-inria/diff-gaussian-rasterization.git

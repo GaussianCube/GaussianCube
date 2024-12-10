@@ -7,6 +7,11 @@ By [Bowen Zhang](http://home.ustc.edu.cn/~zhangbowen), [Yiji Cheng](https://www.
 
 https://github.com/GaussianCube/GaussianCube/assets/164283176/3935590f-a36a-4bdc-b9e1-520c35b9f53e
 
+## News
+
+- [2024-12-10] Update the inference code to support text-conditioned generation.
+- [2024-12-10] Improve the inference code to automatically download model checkpoints and statistics from Hugging Face.
+- [2024-12-01] We introduce [TRELLIS](https://trellis3d.github.io/), a cutting-edge 3D diffusion model that achieves state-of-the-art results on 3D generative modeling.
 
 ## Abstract
 
@@ -31,39 +36,68 @@ Please download model checkpoints and dataset statistics (pre-computed mean and 
 
 | Model                 | Task                          | Download                                                                          |
 |-----------------------|-------------------------------|-----------------------------------------------------------------------------------|
+| Objaverse             | Text-conditioned Generation   | [🤗 Hugging Face v1.0](https://huggingface.co/BwZhang/GaussianCube-Objaverse/tree/main/v1.0) |
+|                       |                               | [🤗 Hugging Face v1.1](https://huggingface.co/BwZhang/GaussianCube-Objaverse/tree/main/v1.1) |
 | OmniObject3D          | Class-conditioned Generation  | [🤗 Hugging Face](https://huggingface.co/BwZhang/GaussianCube-OmniObject3D-v1.0)  |
 | ShapeNet Car          | Unconditional Generation      | [🤗 Hugging Face](https://huggingface.co/BwZhang/GaussianCube-ShapeNetCar-v1.0)   |
 | ShapeNet Chair        | Unconditional Generation      | [🤗 Hugging Face](https://huggingface.co/BwZhang/GaussianCube-ShapeNetChair-v1.0) |
 
+Note: The `v1.0` Objaverse model is trained under the setting of [our paper](http://arxiv.org/abs/2403.19655). 
+
+For `v1.1` version, we re-filter the data of Objaverse according to [aesthetic score](https://laion.ai/blog/laion-aesthetics/). We also include `hssd_models` and `3D-FUTURE` for training, building a training set of around 170k high-quality 3D assets. Moreover, we generate the text captions of each 3D asset using GPT-4o, resulting highly detailed text description. Therefore, our `v1.1` model has stronger capability to longer and more detailed input text captions. The high-quality text captions will be made pubic available soon, please stay tuned.
+
 ## Inference
+
+The inference code now supports automatic downloading of model checkpoints and statistics from Hugging Face. You can simply specify the model name and the script will handle the rest.
+
+### Text-conditioned Generation on Objaverse
+
+```bash
+# Using Objaverse v1.1 model (recommended)
+python inference.py --model_name objaverse_v1.1 --exp_name /tmp/objaverse_test --config configs/objaverse_text_cond.yml --text "A donut with blue frosting and sprinkles." --guidance_scale 3.5 --num_samples 1 --render_video
+# Using Objaverse v1.0 model
+python inference.py --model_name objaverse_v1.0 --exp_name /tmp/objaverse_test --config configs/objaverse_text_cond.yml --text "A donut with blue frosting and sprinkles." --guidance_scale 3.5 --num_samples 1 --render_video
+```
 
 ### Class-conditioned Generation on OmniObject3D
 
-To inference pretrained model of OmniObject3D, save the downloaded model checkpoint and dataset statistics to `./OmniObject3D/`, then run:
 ```bash
-python inference.py --exp_name /tmp/OmniObject3D_test --config configs/omni_class_cond.yml  --rescale_timesteps 300 --ckpt ./OmniObject3D/OmniObject3D_ckpt.pt  --mean_file ./OmniObject3D/mean.pt --std_file ./OmniObject3D/std.pt  --bound 1.0 --num_samples 10 --render_video --class_cond
+python inference.py --model_name omniobject3d --exp_name /tmp/omniobject3d_test --config configs/omni_class_cond.yml --rescale_timesteps 300 --num_samples 10 --render_video --class_cond
 ```
 
 ### Unconditional Generation on ShapeNet
 
-To inference pretrained model of ShapeNet Car, save the downloaded model checkpoint and dataset statistics to `./shapenet_car/`, then run:
 ```bash
-python inference.py --exp_name /tmp/shapenet_car_test --config configs/shapenet_uncond.yml  --rescale_timesteps 300 --ckpt ./shapenet_car/shapenet_car_ckpt.pt  --mean_file ./shapenet_car/mean.pt  --std_file ./shapenet_car/std.pt  --bound 0.45 --num_samples 10 --render_video
+# For ShapeNet Car
+python inference.py --model_name shapenet_car --exp_name /tmp/shapenet_car_test --config configs/shapenet_uncond.yml --rescale_timesteps 300 --num_samples 10 --render_video
+
+# For ShapeNet Chair
+python inference.py --model_name shapenet_chair --exp_name /tmp/shapenet_chair_test --config configs/shapenet_uncond.yml --rescale_timesteps 300 --num_samples 10 --render_video
 ```
 
-To inference pretrained model of ShapeNet Chair, save the downloaded model checkpoint and dataset statistics to `./shapenet_chair/`, then run:
-```bash
-python inference.py --exp_name /tmp/shapenet_chair_test --config configs/shapenet_uncond.yml  --rescale_timesteps 300 --ckpt ./shapenet_chair/shapenet_chair_ckpt.pt  --mean_file ./shapenet_chair/mean.pt  --std_file ./shapenet_chair/std.pt  --bound 0.35 --num_samples 10 --render_video
-```
+The script will automatically:
+1. Download the appropriate model checkpoint and statistics files from Hugging Face
+2. Set the correct bound value for each model
+3. Cache the downloaded files for future use
+
+Available model names:
+- `objaverse_v1.0`: Original Objaverse model from our paper
+- `objaverse_v1.1`: Improved Objaverse model with better text capabilities
+- `omniobject3d`: Class-conditioned generation model
+- `shapenet_car`: Unconditional car generation model
+- `shapenet_chair`: Unconditional chair generation model
 
 ### Mesh Conversion
 
 For the generated results, we provide a script to convert the generated GaussianCube to mesh following [LGM](https://github.com/3DTopia/LGM). First, install additional dependencies:
 
 ```bash
-# for mesh extraction
+# for mesh extraction, uv unwarping, exportation
 pip install nerfacc
 pip install git+https://github.com/NVlabs/nvdiffrast
+# for building nvdiffrast plugins (ubuntu example)
+sudo apt install libegl1 libegl1-mesa-dev libgl1-mesa-dev libgles2-mesa
+pip install tyro PyMCubes==0.1.2 pymeshlab ninja pygltflib xatlas scikit-learn
 # install diff_gauss for alpha rendering
 git clone --recurse-submodules https://github.com/slothfulxtx/diff-gaussian-rasterization.git 
 cd diff-gaussian-rasterization
