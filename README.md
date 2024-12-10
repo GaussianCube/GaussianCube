@@ -67,9 +67,12 @@ python inference.py --exp_name /tmp/shapenet_chair_test --config configs/shapene
 For the generated results, we provide a script to convert the generated GaussianCube to mesh following [LGM](https://github.com/3DTopia/LGM). First, install additional dependencies:
 
 ```bash
-# for mesh extraction
+# for mesh extraction, uv unwarping, exportation
 pip install nerfacc
 pip install git+https://github.com/NVlabs/nvdiffrast
+# for building nvdiffrast plugins (ubuntu example)
+sudo apt install libegl1 libegl1-mesa-dev libgl1-mesa-dev libgles2-mesa
+pip install tyro PyMCubes==0.1.2 pymeshlab ninja pygltflib xatlas scikit-learn
 # install diff_gauss for alpha rendering
 git clone --recurse-submodules https://github.com/slothfulxtx/diff-gaussian-rasterization.git 
 cd diff-gaussian-rasterization
